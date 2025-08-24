@@ -1,109 +1,147 @@
-🩺 Disease Prediction Chatbot
-A simple web-based chatbot that predicts diseases based on user symptoms using a Naive Bayes machine learning model.
+# Disease Predictor Chatbot
 
-📁 Project Structure
-bash
-Copy
-Edit
-Disease-Predictor-Chatbot/
-│
-├── app.py                # Flask backend
-├── train_model.py        # Script to train and save the ML model
-├── model.pkl             # Trained ML model (generated)
-├── vectorizer.pkl        # Trained vectorizer (generated)
-│
-├── index.html            # Frontend UI
-├── script.js             # Frontend JS logic
-├── style.css             # Frontend styling
-│
-└── README.md             # Project documentation
-🚀 Features
-Predict diseases from text-based symptom input
+A Flask-based web application that predicts diseases based on user-provided symptoms using a machine learning model.
 
-Voice input support (via Web Speech API)
+## Features
 
-Simple ML model using sklearn
+- **Symptom-based Disease Prediction**: Input symptoms and get predicted diseases
+- **Web Interface**: Clean, responsive web UI
+- **Voice Input Support**: Voice-to-text functionality for symptoms
+- **Machine Learning Model**: Trained on common symptom-disease mappings
+- **RESTful API**: JSON-based API for predictions
 
-Web interface using HTML, CSS, and JS
+## Project Structure
 
-Flask backend with CORS enabled
+```
+Disease-Predictor-Chatbot-Flat/
+├── app.py                 # Main Flask application
+├── train_model.py         # Script to train the ML model
+├── model.pkl             # Trained machine learning model
+├── vectorizer.pkl        # Text vectorizer for symptoms
+├── requirements.txt      # Python dependencies
+├── templates/
+│   └── index.html       # Main HTML template
+├── static/
+│   ├── css/
+│   │   └── style.css    # CSS styles
+│   └── js/
+│       └── script.js    # JavaScript functionality
+└── README.md            # This file
+```
 
-🔧 Requirements
-Python 3.x
+## Prerequisites
 
-pip
+- Python 3.7 or higher
+- pip (Python package installer)
 
-Install Python dependencies:
-bash
-Copy
-Edit
-pip install flask flask-cors scikit-learn joblib
-🧠 Step 1: Train the Model
-bash
-Copy
-Edit
-python train_model.py
-This script trains a MultinomialNB classifier using a small dataset of symptoms and diseases. It saves:
+## Installation
 
-model.pkl (trained model)
+1. **Clone or download the project** to your local machine
 
-vectorizer.pkl (text vectorizer)
+2. **Navigate to the project directory**:
+   ```bash
+   cd Disease-Predictor-Chatbot-Flat
+   ```
 
-🔌 Step 2: Start the Flask Backend
-bash
-Copy
-Edit
-python app.py
-This starts the backend server on:
+3. **Install required dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-cpp
-Copy
-Edit
-http://127.0.0.1:5000/
-🌐 Step 3: Serve the Frontend
-Do NOT open index.html directly.
+## Running the Application
 
-Instead, open a second terminal and run:
+1. **Start the Flask server**:
+   ```bash
+   python app.py
+   ```
 
-bash
-Copy
-Edit
-python -m http.server 8000
-Then go to:
+2. **Open your web browser** and navigate to:
+   ```
+   http://127.0.0.1:5000
+   ```
 
-bash
-Copy
-Edit
-http://localhost:8000/index.html
-This loads your chatbot page properly and allows fetch requests to work.
+3. **Use the chatbot**:
+   - Type symptoms in the input field
+   - Click "Send" or press Enter
+   - Use the voice button (🎤) for voice input
+   - View the predicted disease in the chat
 
-💬 Example Inputs
-Input Symptoms	Predicted Disease
-fever rash swollen glands	measles
-dizziness blurred vision headache	hypertension
-stomach pain diarrhea vomiting	food poisoning
+## API Usage
 
-🛠 Troubleshooting
-❌ Failed to fetch
-Cause: Opening index.html directly as a file (e.g., file:///...)
+The application provides a REST API endpoint for predictions:
 
-Fix: Always use http://localhost:8000/index.html
+**Endpoint**: `POST /predict`
 
-❌ CORS or blocked fetch
-Make sure Flask server has:
+**Request Body**:
+```json
+{
+  "message": "fever cough sore throat"
+}
+```
 
-python
-Copy
-Edit
-from flask_cors import CORS
-CORS(app)
-🏁 Optional: One-Click Startup Script
-You can create a .bat file to start both the Flask server and the frontend server.
+**Response**:
+```json
+{
+  "reply": "flu"
+}
+```
 
-Let me know if you'd like this added!
-![image](https://github.com/user-attachments/assets/0c7408fc-4117-45ae-81e5-a0ec1639c8f8)
+**Example using curl**:
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"message":"fever cough sore throat"}' \
+  http://127.0.0.1:5000/predict
+```
 
+## Training the Model
 
-👩‍💻 Made By
-Sriya Pandey
-Computer Science Engineer, Chandigarh University
+If you want to retrain the model with new data:
+
+1. **Modify the training data** in `train_model.py`
+2. **Run the training script**:
+   ```bash
+   python train_model.py
+   ```
+3. **Restart the Flask application**
+
+## Supported Diseases
+
+The current model can predict:
+- Flu
+- Cold
+- Pneumonia
+- Food poisoning
+- Migraine
+- Allergy
+- Arthritis
+- Indigestion
+- Measles
+- Hypothyroidism
+- Tuberculosis
+- Malaria
+- Diabetes
+- Anxiety disorder
+- Alzheimer's
+- Viral infection
+- Stomach flu
+- COVID-19
+- Urinary tract infection
+- Hypertension
+
+## Troubleshooting
+
+- **Port already in use**: Change the port in `app.py` or kill the existing process
+- **Model loading errors**: Ensure `model.pkl` and `vectorizer.pkl` exist
+- **Dependency issues**: Reinstall requirements with `pip install -r requirements.txt`
+
+## Technologies Used
+
+- **Backend**: Flask (Python web framework)
+- **Machine Learning**: scikit-learn (Naive Bayes classifier)
+- **Frontend**: HTML, CSS, JavaScript
+- **Voice Recognition**: Web Speech API
+- **Data Serialization**: joblib
+
+## License
+
+This project is open source and available under the MIT License.
